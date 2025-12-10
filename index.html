@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beautiful Heart Animation - Pure CSS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .heart {
+            position: relative;
+            width: 200px;
+            height: 180px;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            cursor: pointer;
+            filter: drop-shadow(0 0 20px rgba(255, 0, 100, 0.6));
+        }
+
+        .heart:before,
+        .heart:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 100px;
+            height: 160px;
+            border-radius: 100px 100px 0 0;
+            background: linear-gradient(135deg, #ff0844, #ff5e7e);
+        }
+
+        .heart:before {
+            left: 100px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+
+        .heart:after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        /* Heartbeat Animation */
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 20px rgba(255, 8, 68, 0.8));
+            }
+            10% {
+                transform: scale(1.15);
+                filter: drop-shadow(0 0 40px rgba(255, 8, 68, 1));
+            }
+            20% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 20px rgba(255, 8, 68, 0.8));
+            }
+            30% {
+                transform: scale(1.15);
+                filter: drop-shadow(0 0 40px rgba(255, 8, 68, 1));
+            }
+            40% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 20px rgba(255, 8, 68, 0.8));
+            }
+        }
+
+        /* Hover Effect */
+        .heart:hover {
+            animation: pulse 0.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        /* Floating Particles */
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: float 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0) scale(1);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-200px) translateX(var(--tx)) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Multiple particles with different delays */
+        .particle:nth-child(1) { left: 50%; animation-delay: 0s; --tx: -30px; }
+        .particle:nth-child(2) { left: 50%; animation-delay: 0.5s; --tx: 30px; }
+        .particle:nth-child(3) { left: 50%; animation-delay: 1s; --tx: -50px; }
+        .particle:nth-child(4) { left: 50%; animation-delay: 1.5s; --tx: 50px; }
+        .particle:nth-child(5) { left: 50%; animation-delay: 2s; --tx: 0px; }
+        .particle:nth-child(6) { left: 50%; animation-delay: 2.5s; --tx: -20px; }
+
+        /* Title Styling */
+        h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 2s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Info Text */
+        .info {
+            color: white;
+            margin-top: 40px;
+            font-size: 1.1rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Message Display */
+        .message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: white;
+            font-weight: bold;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1000;
+            text-align: center;
+            transition: opacity 0.5s ease;
+        }
+
+        .message.show {
+            opacity: 1;
+            animation: messageFloat 3s ease-in-out;
+        }
+
+        @keyframes messageFloat {
+            0% {
+                transform: translate(-50%, -50%) scale(0.5);
+                opacity: 0;
+            }
+            20% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 1;
+            }
+            80% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -60%) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Bonus: Click Effect */
+        .heart.clicked {
+            animation: explode 0.6s ease-out;
+        }
+
+        @keyframes explode {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.5) rotate(10deg);
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        /* Background Animation */
+        .bg-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .bg-heart {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            opacity: 0.1;
+            animation: bgFloat 15s linear infinite;
+        }
+
+        .bg-heart:before,
+        .bg-heart:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 15px;
+            height: 24px;
+            border-radius: 15px 15px 0 0;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .bg-heart:before {
+            left: 15px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+
+        .bg-heart:after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        @keyframes bgFloat {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+            }
+        }
+
+        .bg-heart:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 12s; }
+        .bg-heart:nth-child(2) { left: 25%; animation-delay: 2s; animation-duration: 14s; }
+        .bg-heart:nth-child(3) { left: 40%; animation-delay: 4s; animation-duration: 13s; }
+        .bg-heart:nth-child(4) { left: 55%; animation-delay: 1s; animation-duration: 15s; }
+        .bg-heart:nth-child(5) { left: 70%; animation-delay: 3s; animation-duration: 11s; }
+        .bg-heart:nth-child(6) { left: 85%; animation-delay: 5s; animation-duration: 16s; }
+    </style>
+</head>
+<body>
+    <!-- Background Hearts -->
+    <div class="bg-hearts">
+        <div class="bg-heart"></div>
+        <div class="bg-heart"></div>
+        <div class="bg-heart"></div>
+        <div class="bg-heart"></div>
+        <div class="bg-heart"></div>
+        <div class="bg-heart"></div>
+    </div>
+
+    <!-- Message Display -->
+    <div class="message" id="loveMessage">Xosoo saihan amraarai &lt;3</div>
+
+    <div class="container">
+        <div class="heart" id="mainHeart">
+            <!-- Floating Particles -->
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+    </div>
+
+    <script>
+        // Click effect and message display
+        const heart = document.getElementById('mainHeart');
+        const message = document.getElementById('loveMessage');
+
+        heart.addEventListener('click', function() {
+            this.classList.add('clicked');
+
+            // Show message
+            message.classList.add('show');
+
+            setTimeout(() => {
+                this.classList.remove('clicked');
+            }, 600);
+
+            // Hide message after animation
+            setTimeout(() => {
+                message.classList.remove('show');
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
